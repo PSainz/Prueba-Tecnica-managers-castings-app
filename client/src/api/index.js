@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5500/';
+const url = 'http://localhost:5500/contestants';
 
 export const fetchContestants = () => axios.get(url);
 export const createContestant = (newContestant) => axios.post(url, newContestant);

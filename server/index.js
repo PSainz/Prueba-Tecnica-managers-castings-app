@@ -12,7 +12,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
-app.use('/', contestantsRoutes);
+app.use('/contestants', contestantsRoutes);
 
 const CONNECTION_URL = process.env.DB;
 const PORT = process.env.PORT|| 5500;

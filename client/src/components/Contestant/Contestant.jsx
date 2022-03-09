@@ -7,11 +7,8 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-// import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
-// import DeleteIcon from "@material-ui/icons/Delete";
-// import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { useDispatch } from "react-redux";
-
+import ModalEdit from "../ModalEdit/ModalEdit.jsx";
 import { deleteContestant } from "../../actions/contestants";
 // import useStyles from "./styles";
 
@@ -32,15 +29,6 @@ const Contestant = ({ contestant, setCurrentId }) => {
         </Typography>
       </div>
       <div className={""}>
-        <Button
-          style={{ color: "white" }}
-          size="small"
-          onClick={() => setCurrentId(contestant._id)}
-        >
-          {/* <MoreHorizIcon fontSize="default" /> */}
-        </Button>
-      </div>
-      <div className={""}>
         <Typography variant="body2" color="textSecondary" component="h2">
           {contestant.birth_date}
         </Typography>
@@ -59,7 +47,15 @@ const Contestant = ({ contestant, setCurrentId }) => {
           color="primary"
           onClick={() => dispatch(deleteContestant(contestant._id))}
         >
-          BYE BYE MADAFAKA
+          DELETE
+        </Button>
+        <Button
+          style={{ color: "green" }}
+          size="small"
+          onClick={() => setCurrentId(contestant._id)}
+        >
+          {/* <ModalEdit currentId={contestant._id} /> */}
+          EDIT
         </Button>
       </CardActions>
     </Card>

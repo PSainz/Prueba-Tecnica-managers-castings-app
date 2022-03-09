@@ -1,5 +1,6 @@
 import express from 'express';
 import Contestant from "../models/contestant.js";
+import mongoose from 'mongoose';
 const router = express.Router();
 
 export const getContestants = async (req, res) => {
@@ -8,8 +9,9 @@ export const getContestants = async (req, res) => {
   
       res.status(200).json(contestants);
     } catch (error) {
-      console.log("PASANDO POR AQUI getContestants")
+     
       res.status(404).json({ message: error.message });
+
     }
   };
   
@@ -21,8 +23,10 @@ export const getContestants = async (req, res) => {
   
       res.status(200).json(contestant);
     } catch (error) {
-      console.log("PASANDO POR AQUI getContestant")
+      
       res.status(404).json({ message: error.message });
+     
+
     }
   };
   
@@ -52,33 +56,54 @@ export const getContestants = async (req, res) => {
     try {
       await newContestant.save();
       res.status(201).json(newContestant);
-      console.log("PUTO CREADO")
+      console.log("Creado!")
     } catch (error) {
       res.status(409).json({ message: error.message });
     }
   };
 
-//   export const updateContestant = async (req, res) => {
-//     const { id } = req.params;
-//     const { title, message, creator, selectedFile, tags } = req.body;
+  export const updateContestant = async (req, res) => {
+    const {id: _id } = req.params;
+    // const { 
+    //   first_name,
+    //   last_name,
+    //   birth_date,
+    //   mobile_phone,
+    //   country,
+    //   email,
+    //   star_wars_character,
+    //   selectedFile } = req.body;
+
+    const contestant = req.body;
     
-//     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send(`No post with id: ${id}`);
 
-//     const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+    // const updatedContestant = {
+    //   first_name,
+    //   last_name, 
+    //   birth_date,
+    //   mobile_phone,
+    //   country,
+    //   email,
+    //   star_wars_character,
+    //   selectedFile,
+    //    _id: id };
 
-//     await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+    const updatedContestant = await Contestant.findByIdAndUpdate(_id, {...contestant, _id}, { new: true });
+    
 
-//     res.json(updatedPost);
-// }
+    res.json(updatedContestant);
+    console.log("Editado!")
+}
 
 export const deleteContestant = async (req, res) => {
     const { id } = req.params;
 
-    console.log("PASANDO POR AQUI deleteContestant", id)
-
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
     await Contestant.findByIdAndRemove(id);
+
+    console.log('Borrado!')
 
     res.json({ message: "Contestant deleted successfully." });
 }

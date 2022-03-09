@@ -16,6 +16,9 @@ function Home() {
         <li>
           <Link to="/create-contestant">Create Contestant</Link>
         </li>
+        <li>
+          <Link to="/prueba">Prueba</Link>
+        </li>
       </ul>
     </div>
   );

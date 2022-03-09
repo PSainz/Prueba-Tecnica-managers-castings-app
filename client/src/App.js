@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Home from "./components/Home/Home.jsx";
 import Contestants from "./components/Contestants/Contestants.jsx";
 import CreateContestant from "./components/CreateContestant/CreateContestant.jsx";
+import Prueba from "./components/Prueba"
 import { getContestants } from "./actions/contestants";
 
 
@@ -24,6 +25,7 @@ const App = () => {
           <Route exact path="/" element={<Home />}></Route>
            <Route exact path="/contestants" element={<Contestants setCurrentId={setCurrentId} />}></Route>
            <Route exact path="/create-contestant" element={<CreateContestant currentId={currentId} setCurrentId={setCurrentId}/>}></Route> 
+           <Route exact path="/prueba" element={<Prueba currentId={currentId} setCurrentId={setCurrentId}/>}></Route> 
         </Routes>
       </div>
     </Router>

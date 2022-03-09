@@ -27,7 +27,7 @@ const Contestants = ({ setCurrentId }) => {
               type="submit"
               fullWidth
             >
-              Show forecast
+              Show
             </Button>
           </Grid>
         ))}

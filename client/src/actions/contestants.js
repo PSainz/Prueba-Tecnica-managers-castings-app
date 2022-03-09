@@ -35,6 +35,7 @@ export const updateContestant = (id, contestant) => async (dispatch) => {
 export const deleteContestant = (id) => async (dispatch) => {
   try {
     await api.deleteContestant(id);
+    console.log(id, "id")
 
     dispatch({ type: DELETE, payload: id });
   } catch (error) {

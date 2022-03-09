@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
 import { useNavigate } from "react-router-dom";
-import { createContestant } from "../../actions/contestants";
-import { TextField, MenuItem, Button } from "@mui/material";
+import { createContestant, updateContestant } from "../../actions/contestants";
+import { TextField, MenuItem, Button, Typography } from "@mui/material";
 
 const CreateContestant = ({ currentId, setCurrentId }) => {
   const [contestantData, setContestantData] = useState({
@@ -19,7 +19,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
 
   const contestant = useSelector((state) =>
     currentId
-      ? state.contestants.find((country) => country._id === currentId)
+      ? state.contestants.find((first_name) => first_name._id === currentId)
       : null
   );
 
@@ -31,7 +31,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
   }, [contestant]);
 
   const clear = () => {
-    setCurrentId(0);
+    setCurrentId();
     setContestantData({
       first_name: "",
       last_name: "",
@@ -45,13 +45,20 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
   };
 
   const handleSubmit = async (e) => {
-    if (currentId === 0) {
-      e.preventDefault();
-      dispatch(createContestant(contestantData));
+    e.preventDefault();
+    // if (currentId === 0) {
+    //   dispatch(createContestant(contestantData));
+    //   clear();
+    // } else {
+    //   dispatch(updateContestant(currentId, contestantData));
+    //   clear();
+    // }
+    if (currentId) {
+      dispatch(updateContestant(currentId, contestantData));
       clear();
-      navigate("/contestants");
     } else {
-      // dispatch(updatePost(currentId, postData));
+      dispatch(createContestant(contestantData));
+      navigate("/contestants");
       clear();
     }
   };
@@ -70,6 +77,11 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
         className={""}
         onSubmit={handleSubmit}
       >
+        <Typography variant="h6">
+          {currentId
+            ? `Editing "${contestant.first_name}"`
+            : "Creating contestant"}
+        </Typography>
         <TextField
           name="first_name"
           variant="outlined"
