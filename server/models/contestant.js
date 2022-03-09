@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const spotSchema = mongoose.Schema({
+const contestantSchema = mongoose.Schema({
   first_name: {
     type: String,
   },
@@ -27,6 +27,6 @@ const spotSchema = mongoose.Schema({
   },
 });
 
-var Spot = mongoose.model("Spot", spotSchema);
+var Contestant = mongoose.model("Contestant", contestantSchema);
 
-export default Spot;
+export default Contestant;

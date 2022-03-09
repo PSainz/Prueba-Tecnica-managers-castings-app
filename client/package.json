@@ -2,18 +2,13 @@
   "name": "client",
   "version": "0.1.0",
   "proxy": "http://localhost:5500",
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
-  },
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@iconify/icons-mdi": "^1.2.1",
     "@iconify/react": "^3.1.4",
-    "@mui/icons-material": "^5.4.2",
+    "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.4.3",
     "@mui/styles": "^5.4.2",
     "@reduxjs/toolkit": "^1.8.0",
@@ -23,9 +18,7 @@
     "axios": "^0.26.0",
     "dotenv": "^16.0.0",
     "framer-motion": "^6.2.8",
-    "google-map-react": "^2.1.10",
     "iconify": "^1.4.0",
-    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-file-base64": "^1.0.3",
@@ -36,8 +29,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
-    "web-vitals": "^2.1.4",
-    "webpack": "^5.70.0"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
