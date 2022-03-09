@@ -7,3 +7,6 @@ export const createContestant = (newContestant) => axios.post(url, newContestant
 export const updateContestant = (id, updateContestant) => axios.patch(`${url}/${id}`, updateContestant);
 export const deleteContestant = (id) => axios.delete(`${url}/${id}`);
 
+
+
+

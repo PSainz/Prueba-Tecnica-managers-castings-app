@@ -3,7 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
 import { useNavigate } from "react-router-dom";
 import { createContestant, updateContestant } from "../../actions/contestants";
-import { TextField, MenuItem, Button, Typography } from "@mui/material";
+import { fetchSwapiCharacters } from "../../api/swapi";
+import {
+  TextField,
+  MenuItem,
+  Button,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 
 const CreateContestant = ({ currentId, setCurrentId }) => {
   const [contestantData, setContestantData] = useState({
@@ -17,6 +24,8 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
     selectedFile: "",
   });
 
+  const [character, setCharacter] = useState([]);
+
   const contestant = useSelector((state) =>
     currentId
       ? state.contestants.find((first_name) => first_name._id === currentId)
@@ -27,6 +36,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    fetchSwapiCharacters().then((response) => setCharacter(response));
     if (contestant) setContestantData(contestant);
   }, [contestant]);
 
@@ -46,13 +56,6 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (currentId === 0) {
-    //   dispatch(createContestant(contestantData));
-    //   clear();
-    // } else {
-    //   dispatch(updateContestant(currentId, contestantData));
-    //   clear();
-    // }
     if (currentId) {
       dispatch(updateContestant(currentId, contestantData));
       clear();
@@ -62,12 +65,6 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
       clear();
     }
   };
-
-  //   const waveForms = [
-  //     { value: "Hollow", text: "Hollow" },
-  //     { value: "Fat", text: "Fat" },
-  //     { value: "Mellow", text: "Mellow" },
-  //   ];
 
   return (
     <div>
@@ -159,13 +156,13 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
             })
           }
         >
-          {/* {ratings.map((item) => {
+          {character.map((item) => {
             return (
-              <MenuItem key={item.value} value={item.value || ""}>
-                {item.text}
+              <MenuItem key={item.name} value={item.name || ""}>
+                {item.name}
               </MenuItem>
             );
-          })} */}
+          })}
         </TextField>
         <div className={""}>
           <FileBase
