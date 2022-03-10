@@ -38,7 +38,7 @@ const Contestant = ({ contestant, setCurrentId }) => {
       </Typography>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {contestant.country}
+          {contestant.countrie}
         </Typography>
       </CardContent>
       <CardActions className={""}>

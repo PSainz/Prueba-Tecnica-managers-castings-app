@@ -23,10 +23,7 @@ export const getContestants = async (req, res) => {
   
       res.status(200).json(contestant);
     } catch (error) {
-      
       res.status(404).json({ message: error.message });
-     
-
     }
   };
   
@@ -36,7 +33,7 @@ export const getContestants = async (req, res) => {
         last_name,
         birth_date,
         mobile_phone,
-        country,
+        countrie,
         email,
         star_wars_character,
         selectedFile
@@ -47,7 +44,7 @@ export const getContestants = async (req, res) => {
         last_name,
         birth_date,
         mobile_phone,
-        country,
+        countrie,
         email,
         star_wars_character,
         selectedFile
@@ -64,34 +61,12 @@ export const getContestants = async (req, res) => {
 
   export const updateContestant = async (req, res) => {
     const {id: _id } = req.params;
-    // const { 
-    //   first_name,
-    //   last_name,
-    //   birth_date,
-    //   mobile_phone,
-    //   country,
-    //   email,
-    //   star_wars_character,
-    //   selectedFile } = req.body;
-
     const contestant = req.body;
     
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send(`No post with id: ${id}`);
 
-    // const updatedContestant = {
-    //   first_name,
-    //   last_name, 
-    //   birth_date,
-    //   mobile_phone,
-    //   country,
-    //   email,
-    //   star_wars_character,
-    //   selectedFile,
-    //    _id: id };
-
     const updatedContestant = await Contestant.findByIdAndUpdate(_id, {...contestant, _id}, { new: true });
     
-
     res.json(updatedContestant);
     console.log("Editado!")
 }

@@ -13,7 +13,7 @@ const contestantSchema = mongoose.Schema({
   mobile_phone: {
     type: String,
   },
-  country: {
+  countrie: {
     type: String,
   },
   email: {

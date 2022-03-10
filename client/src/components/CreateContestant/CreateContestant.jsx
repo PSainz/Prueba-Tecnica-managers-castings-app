@@ -8,15 +8,7 @@ import { TextField, MenuItem, Button, Typography } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import moment from "react-moment";
-// import ReactDatePicker from "react-datepicker";
-import { alpha } from "@material-ui/core/styles";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import "date-fns";
-import DateFnsUtils from "@date-io/date-fns";
+import { countries } from "../../utils/countries.js";
 
 const CreateContestant = ({ currentId, setCurrentId }) => {
   const [contestantData, setContestantData] = useState({
@@ -24,18 +16,27 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
     last_name: "",
     birth_date: "",
     mobile_phone: "",
-    country: "",
+    countrie: "",
     email: "",
     star_wars_character: "",
     selectedFile: "",
   });
 
   const [character, setCharacter] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const myMaxDate = new Date("2004-01-01");
+  const myMinDate = new Date("1960-01-01");
+
+  console.log(countries, "countries");
 
   const handleDateChange = (date) => {
-    console.log(date.toLocaleDateString());
-    setSelectedDate(date.toLocaleDateString());
+    if (date !== null) {
+      console.log(date.toLocaleDateString());
+      setSelectedDate(date.toLocaleDateString());
+    } else {
+      console.log("null");
+    }
   };
 
   const contestant = useSelector((state) =>
@@ -59,7 +60,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
       last_name: "",
       birth_date: "",
       mobile_phone: "",
-      country: "",
+      countrie: "",
       email: "",
       star_wars_character: "",
       selectedFile: "",
@@ -115,14 +116,15 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
         />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
+            variant="outlined"
+            emptyLabel="Birth date*"
             openTo="year"
             label="Birth date*"
             disableFuture
-            // minDate="2020-01-01"
-            // minDate="2021-01-01"
+            minDate={myMinDate}
+            maxDate={myMaxDate}
             value={selectedDate || ""}
             onChange={handleDateChange}
-            // renderInput={(selectedDate) => <TextField {...selectedDate} />}
             renderInput={(selectedDate) => (
               <TextField
                 {...selectedDate}
@@ -131,32 +133,6 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
             )}
           />
         </LocalizationProvider>
-
-        {/* <ReactDatePicker
-          dateFormat="d MMM yyyy"
-          minDate={new Date()}
-          selected={
-            contestantData.birth_date?.value
-              ? new Date(contestantData.birth_date.value)
-              : null
-          }
-          showTimeSelect={false}
-          todayButton="Today"
-          dropdownMode="select"
-          isClearable
-          placeholderText="Click to select time"
-          shouldCloseOnSelect
-        /> */}
-        {/* <div>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              label="Birth date*"
-              variant="inline"
-              value={selectedDate}
-              onChange={handleDateChange}
-            />
-          </MuiPickersUtilsProvider>
-        </div> */}
         <TextField
           name="mobile_phone"
           variant="outlined"
@@ -171,13 +147,13 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
           }
         />
         <TextField
-          name="country"
+          name="countrie"
           variant="outlined"
-          label="Country of residence*"
+          label="Countrie of residence*"
           fullWidth
-          value={contestantData.country || ""}
+          value={contestantData.countrie || ""}
           onChange={(e) =>
-            setContestantData({ ...contestantData, country: e.target.value })
+            setContestantData({ ...contestantData, countrie: e.target.value })
           }
         />
         <TextField
