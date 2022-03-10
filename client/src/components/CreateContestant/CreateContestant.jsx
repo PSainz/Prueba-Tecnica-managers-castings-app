@@ -28,14 +28,13 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
   const myMaxDate = new Date("2004-01-01");
   const myMinDate = new Date("1960-01-01");
 
-  console.log(countries, "countries");
-
   const handleDateChange = (date) => {
     if (date !== null) {
       console.log(date.toLocaleDateString());
       setSelectedDate(date.toLocaleDateString());
     } else {
       console.log("null");
+      setSelectedDate("");
     }
   };
 
@@ -117,9 +116,9 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             variant="outlined"
-            emptyLabel="Birth date*"
+            emptyLabel="Birth date (+18)*"
             openTo="year"
-            label="Birth date*"
+            label="Birth date (+18)*"
             disableFuture
             minDate={myMinDate}
             maxDate={myMaxDate}
@@ -147,16 +146,6 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
           }
         />
         <TextField
-          name="countrie"
-          variant="outlined"
-          label="Countrie of residence*"
-          fullWidth
-          value={contestantData.countrie || ""}
-          onChange={(e) =>
-            setContestantData({ ...contestantData, countrie: e.target.value })
-          }
-        />
-        <TextField
           name="email"
           variant="outlined"
           label="Email*"
@@ -166,6 +155,29 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
             setContestantData({ ...contestantData, email: e.target.value })
           }
         />
+        <TextField
+          name="star_wars_character"
+          variant="outlined"
+          fullWidth
+          select
+          label="Countrie of residence*"
+          // value={contestantData.countrie}
+          value={"Spain"}
+          onChange={(e) =>
+            setContestantData({
+              ...contestantData,
+              countrie: e.target.value,
+            })
+          }
+        >
+          {countries.map((item) => {
+            return (
+              <MenuItem key={item.name} value={item.name || ""}>
+                {item.name}
+              </MenuItem>
+            );
+          })}
+        </TextField>
         <TextField
           name="star_wars_character"
           variant="outlined"
