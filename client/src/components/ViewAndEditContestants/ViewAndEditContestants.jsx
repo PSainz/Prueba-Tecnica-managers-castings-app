@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
-import Contestants from "../components/Contestants/Contestants";
-import CreateContestant from "../components/CreateContestant/CreateContestant";
-import { getContestants } from "../actions/contestants";
+import Contestants from "../Contestants/Contestants.jsx";
+import CreateContestant from "../CreateContestant/CreateContestant.jsx";
+import { getContestants } from "../../actions/contestants.js";
 
-const Prueba = () => {
+const ViewAndEditContestants = () => {
   const [currentId, setCurrentId] = useState(0);
   const dispatch = useDispatch();
   //   const classes = useStyles();
@@ -40,4 +40,4 @@ const Prueba = () => {
   );
 };
 
-export default Prueba;
+export default ViewAndEditContestants;
