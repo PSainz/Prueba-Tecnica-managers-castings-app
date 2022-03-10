@@ -4,13 +4,19 @@ import FileBase from "react-file-base64";
 import { useNavigate } from "react-router-dom";
 import { createContestant, updateContestant } from "../../actions/contestants";
 import { fetchSwapiCharacters } from "../../api/swapi";
+import { TextField, MenuItem, Button, Typography } from "@mui/material";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import moment from "react-moment";
+// import ReactDatePicker from "react-datepicker";
+import { alpha } from "@material-ui/core/styles";
 import {
-  TextField,
-  MenuItem,
-  Button,
-  Typography,
-  CircularProgress,
-} from "@mui/material";
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
 
 const CreateContestant = ({ currentId, setCurrentId }) => {
   const [contestantData, setContestantData] = useState({
@@ -25,6 +31,12 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
   });
 
   const [character, setCharacter] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleDateChange = (date) => {
+    console.log(date.toLocaleDateString());
+    setSelectedDate(date.toLocaleDateString());
+  };
 
   const contestant = useSelector((state) =>
     currentId
@@ -57,9 +69,11 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId) {
+      contestantData.birth_date = selectedDate;
       dispatch(updateContestant(currentId, contestantData));
       clear();
     } else {
+      contestantData.birth_date = selectedDate;
       dispatch(createContestant(contestantData));
       navigate("/contestants");
       clear();
@@ -99,16 +113,50 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
             setContestantData({ ...contestantData, last_name: e.target.value })
           }
         />
-        <TextField
-          name="birth_date"
-          variant="outlined"
-          label="Birth date*"
-          fullWidth
-          value={contestantData.birth_date || ""}
-          onChange={(e) =>
-            setContestantData({ ...contestantData, birth_date: e.target.value })
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+            openTo="year"
+            label="Birth date*"
+            disableFuture
+            // minDate="2020-01-01"
+            // minDate="2021-01-01"
+            value={selectedDate || ""}
+            onChange={handleDateChange}
+            // renderInput={(selectedDate) => <TextField {...selectedDate} />}
+            renderInput={(selectedDate) => (
+              <TextField
+                {...selectedDate}
+                helperText={selectedDate?.inputProps?.placeholder}
+              />
+            )}
+          />
+        </LocalizationProvider>
+
+        {/* <ReactDatePicker
+          dateFormat="d MMM yyyy"
+          minDate={new Date()}
+          selected={
+            contestantData.birth_date?.value
+              ? new Date(contestantData.birth_date.value)
+              : null
           }
-        />
+          showTimeSelect={false}
+          todayButton="Today"
+          dropdownMode="select"
+          isClearable
+          placeholderText="Click to select time"
+          shouldCloseOnSelect
+        /> */}
+        {/* <div>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              label="Birth date*"
+              variant="inline"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+          </MuiPickersUtilsProvider>
+        </div> */}
         <TextField
           name="mobile_phone"
           variant="outlined"
