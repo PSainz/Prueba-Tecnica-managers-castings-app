@@ -2,12 +2,16 @@ import React from "react";
 import {
   Card,
   CardActions,
+  CardContent,
   CardMedia,
   Button,
   Typography,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
+import ModalEdit from "../ModalEdit/ModalEdit.jsx";
 import { deleteContestant } from "../../actions/contestants";
+import { useAuth0 } from "@auth0/auth0-react";
+// import useStyles from "./styles";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -29,7 +33,7 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     borderRadius: "15px",
     height: "100%",
-    width: "100%",
+    border: "1px solid yellow",
     position: "relative",
     margin: "15px",
   },
@@ -45,28 +49,17 @@ const useStyles = makeStyles({
     right: "20px",
     color: "white",
   },
-  grid: {
-    display: "flex",
+  container: {
+    border: "1px solid yellow",
   },
   details: {
     display: "flex",
     justifyContent: "space-between",
-    flexDirection: "column",
     margin: "20px",
-  },
-  title: {
-    padding: "0 16px",
-    color: "black",
-  },
-  cardActions: {
-    padding: "0 16px 8px 16px",
-    display: "flex",
-    justifyContent: "space-between",
   },
 });
 
-const Contestant = ({ contestant, setCurrentId }) => {
-  const dispatch = useDispatch();
+const ContestantSimple = ({ contestant }) => {
   const classes = useStyles();
 
   return (
@@ -84,15 +77,10 @@ const Contestant = ({ contestant, setCurrentId }) => {
             {contestant.first_name + " " + contestant.last_name}
           </Typography>
         </div>
+        <div className={classes.overlay2}>
+          <Typography variant="h6">{contestant.star_wars_character}</Typography>
+        </div>
         <div className={classes.details}>
-          <Typography
-            className={classes.title}
-            gutterBottom
-            variant="h6"
-            component="h6"
-          >
-            {contestant.star_wars_character}
-          </Typography>
           <Typography
             className={classes.title}
             gutterBottom
@@ -127,25 +115,9 @@ const Contestant = ({ contestant, setCurrentId }) => {
           </Typography>
         </div>
         <div className={classes.details}></div>
-        <CardActions className={classes.cardActions}>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => setCurrentId(contestant._id)}
-          >
-            EDIT
-          </Button>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => dispatch(deleteContestant(contestant._id))}
-          >
-            DELETE
-          </Button>
-        </CardActions>
       </Card>
     </div>
   );
 };
 
-export default Contestant;
+export default ContestantSimple;

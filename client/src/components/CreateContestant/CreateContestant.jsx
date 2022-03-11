@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,39 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import { countries } from "../../utils/countries.js";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  form: {
+    justifyContent: "center",
+    backgroundColor: "white",
+    width: "100%",
+  },
+  container: {
+    border: "1px solid yellow",
+    marginTop: "20px",
+    width: "80%",
+    margin: "auto",
+    padding: "10px",
+  },
+  alignCenter: {
+    textAlign: "center",
+    padding: "10px",
+  },
+  fileInput: {
+    width: "97%",
+    margin: "10px 10px",
+  },
+  fileInputDate: {
+    width: "97% !important",
+    margin: "10px 0",
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    margin: "10px",
+  },
+});
 
 const CreateContestant = ({ currentId, setCurrentId }) => {
   const [contestantData, setContestantData] = useState({
@@ -21,6 +55,8 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
     star_wars_character: "",
     selectedFile: "",
   });
+
+  const classes = useStyles();
 
   const [character, setCharacter] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -71,29 +107,44 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
     if (currentId) {
       contestantData.birth_date = selectedDate;
       dispatch(updateContestant(currentId, contestantData));
+      navigate("/view-contestants");
       clear();
     } else {
       contestantData.birth_date = selectedDate;
       dispatch(createContestant(contestantData));
-      navigate("/contestants");
+      navigate("/view-contestants");
       clear();
     }
   };
 
   return (
-    <div>
+    <div className={classes.container}>
+      <div className={classes.buttons}>
+        <Button component={Link} to="/" variant="contained" color="primary">
+          Home
+        </Button>
+        <Button
+          component={Link}
+          to="/view-contestants"
+          variant="contained"
+          color="primary"
+        >
+          View contestants
+        </Button>
+      </div>
       <form
         autoComplete="off"
         noValidate
-        className={""}
+        className={classes.form}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">
+        <Typography variant="h6" className={classes.alignCenter}>
           {currentId
             ? `Editing "${contestant.first_name}"`
             : "Creating contestant"}
         </Typography>
         <TextField
+          className={classes.fileInput}
           name="first_name"
           variant="outlined"
           label="First name*"
@@ -104,6 +155,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
           }
         />
         <TextField
+          className={classes.fileInput}
           name="last_name"
           variant="outlined"
           label="Last name*"
@@ -113,26 +165,33 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
             setContestantData({ ...contestantData, last_name: e.target.value })
           }
         />
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            variant="outlined"
-            emptyLabel="Birth date (+18)*"
-            openTo="year"
-            label="Birth date (+18)*"
-            disableFuture
-            minDate={myMinDate}
-            maxDate={myMaxDate}
-            value={selectedDate || ""}
-            onChange={handleDateChange}
-            renderInput={(selectedDate) => (
-              <TextField
-                {...selectedDate}
-                helperText={selectedDate?.inputProps?.placeholder}
-              />
-            )}
-          />
-        </LocalizationProvider>
+        <div className={classes.fileInput}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            className={classes.fileInputDate}
+          >
+            <DatePicker
+              className={classes.fileInputDate}
+              variant="outlined"
+              emptyLabel="Birth date (+18)*"
+              openTo="year"
+              label="Birth date (+18)*"
+              disableFuture
+              minDate={myMinDate}
+              maxDate={myMaxDate}
+              value={selectedDate || ""}
+              onChange={handleDateChange}
+              renderInput={(selectedDate) => (
+                <TextField
+                  {...selectedDate}
+                  helperText={selectedDate?.inputProps?.placeholder}
+                />
+              )}
+            />
+          </LocalizationProvider>
+        </div>
         <TextField
+          className={classes.fileInput}
           name="mobile_phone"
           variant="outlined"
           label="Mobile phone*"
@@ -146,6 +205,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
           }
         />
         <TextField
+          className={classes.fileInput}
           name="email"
           variant="outlined"
           label="Email*"
@@ -156,6 +216,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
           }
         />
         <TextField
+          className={classes.fileInput}
           name="star_wars_character"
           variant="outlined"
           fullWidth
@@ -163,10 +224,10 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
           label="Countrie of residence*"
           // value={contestantData.countrie}
           value={"Spain"}
-          onChange={(e) =>
+          onChange={() =>
             setContestantData({
               ...contestantData,
-              countrie: e.target.value,
+              countrie: "Spain",
             })
           }
         >
@@ -179,6 +240,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
           })}
         </TextField>
         <TextField
+          className={classes.fileInput}
           name="star_wars_character"
           variant="outlined"
           fullWidth
@@ -200,7 +262,7 @@ const CreateContestant = ({ currentId, setCurrentId }) => {
             );
           })}
         </TextField>
-        <div className={""}>
+        <div className={classes.fileInput}>
           <FileBase
             type="file"
             multiple={false}

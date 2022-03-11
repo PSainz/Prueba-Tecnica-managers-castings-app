@@ -56,6 +56,9 @@ function Home() {
           </div>
         </div>
       )}
+      <div>
+        <h1 className="welcome">WELCOME TO MANAGERS CASTING APP!</h1>
+      </div>
     </div>
   );
 }
