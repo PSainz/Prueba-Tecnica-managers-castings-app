@@ -6,14 +6,13 @@ import 'dotenv/config' ;
 
 import contestantsRoutes from './routes/contestants.js';
 
+
 const app = express();
-const path = require("path");
 
-app.use(express.static(path.resolve(__dirname, "../client/build")));
-
-app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+app.get("/", (req, res) => {
+  res.send('CASTINGS MANAGER API')
 });
+
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
