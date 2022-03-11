@@ -11,3 +11,6 @@ For running the app go to manage/castings/app/client and run npm start & go to m
 (Build in less than 3 days, needs a lot of work hehehe)
 
 Enjoy!
+
+
+API IN HEROKU --> https://casting-managers-app.herokuapp.com/contestants
