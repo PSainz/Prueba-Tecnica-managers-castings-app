@@ -5,37 +5,57 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { LoginButton } from "../Login/Login.jsx";
 import { LogoutButton } from "../Logout/Logout.jsx";
 import { Button } from "@mui/material";
+import "./Home.css";
 
 function Home() {
   const { isAuthenticated } = useAuth0();
   return (
-    <div className="Home">
-      <header className="Home-header">
-        {isAuthenticated ? (
-          <>
-            <Button>
-              <Link to="/view-and-edit-contestants">Edit contestants</Link>
+    <div className="home">
+      {isAuthenticated ? (
+        <>
+          <div class="buttons-login">
+            <Button
+              component={Link}
+              to="/view-and-edit-contestants"
+              variant="contained"
+              color="primary"
+            >
+              Edit contestants
             </Button>
-            <Button>
-              {" "}
-              <Link to="/create-contestant">Create Contestant</Link>
+            <Button
+              component={Link}
+              to="/create-contestant"
+              variant="contained"
+              color="primary"
+            >
+              Create Contestant
             </Button>
             <LogoutButton />
-          </>
-        ) : (
-          <div className="Home">
-            <header className="Home-header">
-              <LoginButton />
-              <Button>
-                <Link to="/create-contestant">Create Contestant</Link>
-              </Button>
-              <Button>
-                <Link to="/view-contestants">See all contestants</Link>
-              </Button>
-            </header>
           </div>
-        )}
-      </header>
+        </>
+      ) : (
+        <div className="Home">
+          <div class="buttons-login">
+            <Button
+              component={Link}
+              to="/create-contestant"
+              variant="contained"
+              color="primary"
+            >
+              Create Contestant
+            </Button>
+            <Button
+              component={Link}
+              to="/view-contestants"
+              variant="contained"
+              color="primary"
+            >
+              See all contestants
+            </Button>
+            <LoginButton />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
