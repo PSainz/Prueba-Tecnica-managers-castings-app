@@ -13,4 +13,4 @@ Enjoy!
 
 
 API IN HEROKU --> https://casting-managers-app.herokuapp.com/contestants
-APP IN NETLIFY --> https://elegant-joliot-e6ed66.netlify.app/view-contestants
+APP IN NETLIFY --> https://elegant-joliot-e6ed66.netlify.app/
