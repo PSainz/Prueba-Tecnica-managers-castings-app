@@ -11,6 +11,8 @@ For running the app go to manage/castings/app/client and run npm i and after npm
 
 Enjoy!
 
+(The login doesnt work any more in local)
+
 
 API IN HEROKU --> https://casting-managers-app.herokuapp.com/contestants
 APP IN NETLIFY --> https://elegant-joliot-e6ed66.netlify.app/
